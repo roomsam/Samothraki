@@ -1,0 +1,235 @@
+​​​​​​​​​​​​​​​​<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Κρατήσεις Σαμοθράκη 2025</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Karla:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0e1117;
+  --surface: #161b24;
+  --surface2: #1e2533;
+  --border: #2a3142;
+  --text: #e8eaf0;
+  --muted: #7880a0;
+  --accent: #e8c97a;
+  --blue: #5b8dee;
+  --green: #3ec97a;
+  --red: #e8564a;
+  --orange: #e8a03a;
+  --booked: #e8564a;
+  --shadow: 0 4px 20px rgba(0,0,0,.3);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: 'Karla', sans-serif; font-size: 14px; min-height: 100vh; }
+.topbar { background: var(--surface); border-bottom: 1px solid var(--border); display: flex; align-items: stretch; justify-content: space-between; flex-wrap: wrap; gap: 0; position: sticky; top: 0; z-index: 50; }
+.topbar-left { display: flex; align-items: center; padding: 0 20px; gap: 8px; }
+.topbar-left h1 { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--accent); white-space: nowrap; }
+.tabs { display: flex; }
+.tab { padding: 16px 22px; font-size: 13px; font-weight: 600; color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent; transition: color .2s, border-color .2s; white-space: nowrap; }
+.tab:hover { color: var(--text); }
+.tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+.topbar-right { display: flex; align-items: center; padding: 0 16px; }
+.btn-add { background: var(--accent); color: #0e1117; border: none; padding: 8px 18px; border-radius: 7px; font-family: 'Karla', sans-serif; font-weight: 700; font-size: 12px; cursor: pointer; transition: opacity .2s; white-space: nowrap; }
+.btn-add:hover { opacity: .85; }
+.page { display: none; padding: 24px 28px; }
+.page.active { display: block; }
+.stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 22px; }
+.stat-box { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
+.stat-box .sl { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .7px; }
+.stat-box .sv { font-size: 22px; font-weight: 700; margin-top: 3px; }
+.sv.blue { color: var(--blue); } .sv.green { color: var(--green); } .sv.red { color: var(--red); } .sv.gold { color: var(--accent); } .sv.orange { color: var(--orange); }
+.buildings { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media(max-width:680px){ .buildings { grid-template-columns: 1fr; } .page { padding: 14px; } }
+.building { background: var(--surface); border: 1px solid var(--border); border-radius: 13px; overflow: hidden; }
+.bld-head { padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
+.bld-head h2 { font-family: 'Playfair Display', serif; font-size: 15px; }
+.bld-A .bld-head { background: linear-gradient(90deg,rgba(91,141,238,.12),transparent); }
+.bld-A .bld-head h2 { color: var(--blue); }
+.bld-B .bld-head { background: linear-gradient(90deg,rgba(232,201,122,.1),transparent); }
+.bld-B .bld-head h2 { color: var(--accent); }
+.bld-badge { font-size: 10px; padding: 2px 8px; border-radius: 20px; font-weight: 600; }
+.bld-A .bld-badge { background: rgba(91,141,238,.15); color: var(--blue); }
+.bld-B .bld-badge { background: rgba(232,201,122,.12); color: var(--accent); }
+.rooms { padding: 10px; display: flex; flex-direction: column; gap: 8px; }
+.room { background: var(--bg); border: 1px solid var(--border); border-radius: 9px; overflow: hidden; }
+.room-head { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--surface2); border-bottom: 1px solid var(--border); }
+.room-head .rn { font-weight: 600; font-size: 12px; }
+.rstatus { font-size: 10px; padding: 2px 8px; border-radius: 20px; }
+.rs-free { background: rgba(62,201,122,.12); color: var(--green); }
+.rs-busy { background: rgba(232,86,74,.12); color: var(--red); }
+.rs-soon { background: rgba(232,160,58,.12); color: var(--orange); }
+.bk-list { padding: 7px 8px; display: flex; flex-direction: column; gap: 5px; min-height: 36px; }
+.bk-empty { color: var(--muted); font-size: 11px; padding: 4px 4px; font-style: italic; }
+.bk-row { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; padding: 7px 10px; background: var(--surface); border: 1px solid var(--border); border-radius: 7px; cursor: default; }
+.bk-row.bk-active { border-color: rgba(62,201,122,.35); background: rgba(62,201,122,.04); }
+.bk-row.bk-past { opacity: .42; }
+.bk-guest { font-weight: 600; font-size: 12px; flex: 1; min-width: 70px; }
+.bk-dates { color: var(--muted); font-size: 11px; }
+.bk-nights { font-size: 10px; padding: 1px 7px; background: var(--surface2); border-radius: 20px; color: var(--accent); font-weight: 700; }
+.bk-amt { font-size: 11px; color: var(--green); font-weight: 700; }
+.bk-avg { font-size: 10px; color: var(--muted); }
+.bk-src { font-size: 10px; padding: 1px 7px; border-radius: 20px; }
+.src-air { background: rgba(255,90,50,.12); color: #ff7a5a; }
+.src-bk { background: rgba(91,141,238,.12); color: var(--blue); }
+.src-dir { background: rgba(62,201,122,.12); color: var(--green); }
+.del-btn { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 12px; padding: 1px 4px; border-radius: 3px; transition: color .15s; margin-left: auto; }
+.del-btn:hover { color: var(--red); }
+.cal-section { margin-bottom: 24px; }
+.sec-title { font-family: 'Playfair Display', serif; font-size: 16px; color: var(--text); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+.cal-block { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 16px; }
+.cal-mhdr { display: grid; grid-template-columns: 100px 1fr; background: var(--surface2); border-bottom: 1px solid var(--border); }
+.cal-mlbl { padding: 10px 12px; font-family: 'Playfair Display', serif; font-size: 14px; color: var(--accent); border-right: 1px solid var(--border); display: flex; align-items: center; }
+.cal-dhdr { display: flex; overflow: hidden; }
+.cal-dlbl { flex: 1; text-align: center; padding: 6px 0; font-size: 9px; font-weight: 600; color: var(--muted); border-right: 1px solid var(--border); min-width: 0; line-height: 1.3; }
+.cal-dlbl.wknd { color: var(--accent); } .cal-dlbl.todlbl { color: var(--blue); }
+.cal-row { display: grid; grid-template-columns: 100px 1fr; border-top: 1px solid var(--border); }
+.cal-rlbl { padding: 0 10px; font-size: 10px; font-weight: 600; color: var(--muted); border-right: 1px solid var(--border); display: flex; flex-direction: column; justify-content: center; min-height: 32px; background: var(--surface2); }
+.cal-rlbl span { font-size: 8px; font-weight: 400; color: #556; margin-top: 1px; }
+.cal-cells { display: flex; }
+.cal-cell { flex: 1; height: 32px; border-right: 1px solid var(--border); background: var(--bg); min-width: 0; position: relative; }
+.cal-cell:last-child { border-right: none; }
+.cal-cell.bkd { background: var(--booked); opacity: .82; }
+.cal-cell.wkend { background: #161c28; }
+.cal-cell.bkd.wkend { background: var(--booked); }
+.cal-cell.tod { outline: 2px solid var(--blue); outline-offset: -2px; z-index: 2; }
+.cal-cell.bkd:hover::after { content: attr(data-tip); position: absolute; bottom: calc(100% + 5px); left: 50%; transform: translateX(-50%); background: var(--surface2); border: 1px solid var(--border); color: var(--text); font-size: 11px; padding: 5px 9px; border-radius: 6px; white-space: nowrap; z-index: 20; pointer-events: none; }
+.gaps-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px,1fr)); gap: 8px; }
+.gap-card { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--green); border-radius: 9px; padding: 10px 12px; }
+.gap-card.long { border-left-color: var(--orange); }
+.gap-card .gr { font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 3px; }
+.gap-card .gd { font-weight: 600; font-size: 12px; }
+.gap-card .gn { font-size: 11px; color: var(--green); margin-top: 2px; }
+.gap-card.long .gn { color: var(--orange); }
+.no-gaps { color: var(--muted); font-style: italic; font-size: 12px; }
+.legend { display: flex; gap: 14px; margin-bottom: 14px; flex-wrap: wrap; }
+.leg { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--muted); }
+.ldot { width: 10px; height: 10px; border-radius: 2px; }
+.ldot.bkd { background: var(--booked); } .ldot.free { background: var(--bg); border: 1px solid var(--border); } .ldot.wknd { background: #161c28; border: 1px solid var(--border); } .ldot.tod { background: var(--blue); }
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.7); backdrop-filter: blur(4px); z-index: 200; align-items: center; justify-content: center; padding: 16px; }
+.modal-overlay.open { display: flex; }
+.modal { background: var(--surface); border: 1px solid var(--border); border-radius: 15px; padding: 26px; width: 100%; max-width: 430px; box-shadow: 0 24px 80px rgba(0,0,0,.5); animation: mup .22s ease; }
+@keyframes mup { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:none} }
+.modal h3 { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--accent); margin-bottom: 20px; }
+.fg { margin-bottom: 12px; }
+.fg label { display: block; font-size: 10px; color: var(--muted); margin-bottom: 4px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; }
+.fg input, .fg select { width: 100%; background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 9px 11px; border-radius: 7px; font-family: 'Karla', sans-serif; font-size: 13px; transition: border-color .2s; -webkit-appearance: none; }
+.fg input:focus, .fg select:focus { outline: none; border-color: var(--accent); }
+.fg-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.avg-preview { font-size: 12px; color: var(--green); margin-top: 6px; font-weight: 600; min-height: 18px; }
+.modal-actions { display: flex; gap: 9px; margin-top: 18px; }
+.btn-save { flex: 1; background: var(--accent); color: #0e1117; border: none; padding: 10px; border-radius: 7px; font-family: 'Karla', sans-serif; font-weight: 700; font-size: 13px; cursor: pointer; }
+.btn-save:hover { opacity: .88; }
+.btn-cancel { background: var(--surface2); color: var(--muted); border: 1px solid var(--border); padding: 10px 16px; border-radius: 7px; font-family: 'Karla', sans-serif; font-size: 13px; cursor: pointer; }
+select option { background: #1a2030; }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-left"><h1>🌊 Σαμοθράκη 2025</h1></div>
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('dashboard')">📋 Κρατήσεις</div>
+    <div class="tab" onclick="switchTab('calendar')">📅 Σεζόν</div>
+  </div>
+  <div class="topbar-right"><button class="btn-add" onclick="openModal()">+ Κράτηση</button></div>
+</div>
+<div class="page active" id="page-dashboard">
+  <div class="stats-row">
+    <div class="stat-box"><div class="sl">Σύνολο</div><div class="sv blue" id="st-total">0</div></div>
+    <div class="stat-box"><div class="sl">Ενεργές τώρα</div><div class="sv green" id="st-active">0</div></div>
+    <div class="stat-box"><div class="sl">Επερχόμενες</div><div class="sv orange" id="st-upcoming">0</div></div>
+    <div class="stat-box"><div class="sl">Έσοδα μήνα</div><div class="sv gold" id="st-month">€0</div></div>
+    <div class="stat-box"><div class="sl">Μ.Ο. τιμή/νύχτα</div><div class="sv blue" id="st-avg">—</div></div>
+  </div>
+  <div class="buildings">
+    <div class="building bld-A">
+      <div class="bld-head"><h2>Κτίριο Α — Χώρα</h2><span class="bld-badge">2 δωμάτια</span></div>
+      <div class="rooms">
+        <div class="room"><div class="room-head"><span class="rn">🛏 Δωμάτιο Α1</span><span class="rstatus rs-free" id="rs-A1">Ελεύθερο</span></div><div class="bk-list" id="bl-A1"><span class="bk-empty">Δεν υπάρχουν κρατήσεις</span></div></div>
+        <div class="room"><div class="room-head"><span class="rn">🛏 Δωμάτιο Α2</span><span class="rstatus rs-free" id="rs-A2">Ελεύθερο</span></div><div class="bk-list" id="bl-A2"><span class="bk-empty">Δεν υπάρχουν κρατήσεις</span></div></div>
+      </div>
+    </div>
+    <div class="building bld-B">
+      <div class="bld-head"><h2>Κτίριο Β — Αλώνια</h2><span class="bld-badge">2 δωμάτια</span></div>
+      <div class="rooms">
+        <div class="room"><div class="room-head"><span class="rn">🛏 Δωμάτιο Β1</span><span class="rstatus rs-free" id="rs-B1">Ελεύθερο</span></div><div class="bk-list" id="bl-B1"><span class="bk-empty">Δεν υπάρχουν κρατήσεις</span></div></div>
+        <div class="room"><div class="room-head"><span class="rn">🛏 Δωμάτιο Β2</span><span class="rstatus rs-free" id="rs-B2">Ελεύθερο</span></div><div class="bk-list" id="bl-B2"><span class="bk-empty">Δεν υπάρχουν κρατήσεις</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="page" id="page-calendar">
+  <div class="stats-row">
+    <div class="stat-box"><div class="sl">Κατειλημμένες μέρες</div><div class="sv red" id="cs-booked">0</div></div>
+    <div class="stat-box"><div class="sl">Κενές μέρες</div><div class="sv green" id="cs-free">0</div></div>
+    <div class="stat-box"><div class="sl">Πληρότητα</div><div class="sv blue" id="cs-pct">0%</div></div>
+    <div class="stat-box"><div class="sl">Έσοδα σεζόν</div><div class="sv gold" id="cs-rev">€0</div></div>
+    <div class="stat-box"><div class="sl">Μ.Ο. τιμή/νύχτα</div><div class="sv orange" id="cs-avg">—</div></div>
+  </div>
+  <div class="legend">
+    <div class="leg"><div class="ldot bkd"></div>Κράτηση</div>
+    <div class="leg"><div class="ldot free"></div>Κενό</div>
+    <div class="leg"><div class="ldot wknd"></div>Σαββατοκύριακο</div>
+    <div class="leg"><div class="ldot tod"></div>Σήμερα</div>
+  </div>
+  <div class="cal-section" id="cal-container"></div>
+  <div class="cal-section">
+    <div class="sec-title">📭 Κενά — Ιούλιος · Αύγουστος</div>
+    <div class="gaps-grid" id="gaps-container"><span class="no-gaps">Προσθέστε κρατήσεις για να εμφανιστούν τα κενά.</span></div>
+  </div>
+</div>
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <h3>Νέα Κράτηση</h3>
+    <div class="fg"><label>Δωμάτιο</label><select id="f-room"><option value="A1">Κτίριο Α — Α1 (Χώρα)</option><option value="A2">Κτίριο Α — Α2 (Χώρα)</option><option value="B1">Κτίριο Β — Β1 (Αλώνια)</option><option value="B2">Κτίριο Β — Β2 (Αλώνια)</option></select></div>
+    <div class="fg"><label>Πελάτης</label><input type="text" id="f-guest" placeholder="Επώνυμο Όνομα"></div>
+    <div class="fg-row">
+      <div class="fg"><label>Check-in</label><input type="date" id="f-in"></div>
+      <div class="fg"><label>Check-out</label><input type="date" id="f-out"></div>
+    </div>
+    <div class="fg-row">
+      <div class="fg"><label>Σύνολο €</label><input type="number" id="f-amt" placeholder="0" oninput="calcAvg()"></div>
+      <div class="fg"><label>Πηγή</label><select id="f-src"><option value="Airbnb">Airbnb</option><option value="Booking">Booking.com</option><option value="Άμεση">Άμεση</option></select></div>
+    </div>
+    <div class="avg-preview" id="avg-preview"></div>
+    <div class="fg"><label>Σημείωση</label><input type="text" id="f-note" placeholder="Προαιρετικά..."></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal()">Ακύρωση</button>
+      <button class="btn-save" onclick="saveBooking()">Αποθήκευση</button>
+    </div>
+  </div>
+</div>
+<script>
+const ROOMS=[{id:'A1',label:'Δωμάτιο Α1',sub:'Κτ. Α · Χώρα'},{id:'A2',label:'Δωμάτιο Α2',sub:'Κτ. Α · Χώρα'},{id:'B1',label:'Δωμάτιο Β1',sub:'Κτ. Β · Αλώνια'},{id:'B2',label:'Δωμάτιο Β2',sub:'Κτ. Β · Αλώνια'}];
+const MONTHS=[{year:2025,month:6,label:'Ιούλιος 2025',days:31},{year:2025,month:7,label:'Αύγουστος 2025',days:31}];
+const DAY_NAMES=['Κυρ','Δευ','Τρι','Τετ','Πεμ','Παρ','Σαβ'];
+const SEASON_START='2025-07-01',SEASON_END='2025-09-01';
+let bookings=JSON.parse(localStorage.getItem('samothraki_v2')||'[]');
+const todayStr=()=>new Date().toISOString().split('T')[0];
+const pad=n=>String(n).padStart(2,'0');
+const dateStr=(y,m,d)=>`${y}-${pad(m+1)}-${pad(d)}`;
+const nights=(a,b)=>Math.max(0,Math.round((new Date(b)-new Date(a))/86400000));
+const fmt=d=>{const[,m,dd]=d.split('-');return`${dd}/${m}`;};
+const isWknd=(y,m,d)=>{const dow=new Date(y,m,d).getDay();return dow===0||dow===6;};
+const bkForCell=(room,ds)=>bookings.find(b=>b.room===room&&b.checkin<=ds&&b.checkout>ds);
+const addDays=(ds,n)=>{const dt=new Date(ds);dt.setDate(dt.getDate()+n);return dt.toISOString().split('T')[0];};
+function switchTab(t){document.querySelectorAll('.tab').forEach((el,i)=>{el.classList.toggle('active',(i===0&&t==='dashboard')||(i===1&&t==='calendar'));});document.getElementById('page-dashboard').classList.toggle('active',t==='dashboard');document.getElementById('page-calendar').classList.toggle('active',t==='calendar');}
+function renderDashboard(){const today=todayStr();const curMonth=today.slice(0,7);let total=0,active=0,upcoming=0,monthRev=0,totalNights=0,totalAmt=0;ROOMS.forEach(room=>{const list=document.getElementById('bl-'+room.id);const rsEl=document.getElementById('rs-'+room.id);const rBks=bookings.filter(b=>b.room===room.id).sort((a,b)=>a.checkin.localeCompare(b.checkin));const isActive=rBks.some(b=>b.checkin<=today&&b.checkout>today);const isSoon=!isActive&&rBks.some(b=>b.checkin>today&&b.checkin<=addDays(today,7));rsEl.className='rstatus '+(isActive?'rs-busy':isSoon?'rs-soon':'rs-free');rsEl.textContent=isActive?'🔴 Κατειλημμένο':isSoon?'🟡 Σύντομα':'🟢 Ελεύθερο';if(!rBks.length){list.innerHTML='<span class="bk-empty">Δεν υπάρχουν κρατήσεις</span>';return;}list.innerHTML=rBks.map(b=>{const n=nights(b.checkin,b.checkout);const isPast=b.checkout<=today;const isBkActive=b.checkin<=today&&b.checkout>today;const isUp=b.checkin>today;const avg=b.amount&&n?Math.round(b.amount/n):0;const srcCls=b.source==='Airbnb'?'src-air':b.source==='Booking'?'src-bk':'src-dir';total++;if(isBkActive)active++;if(isUp)upcoming++;if(b.checkin.startsWith(curMonth))monthRev+=Number(b.amount||0);totalNights+=n;totalAmt+=Number(b.amount||0);return`<div class="bk-row${isBkActive?' bk-active':isPast?' bk-past':''}"><span class="bk-guest">${b.guest}</span><span class="bk-dates">${fmt(b.checkin)}→${fmt(b.checkout)}</span><span class="bk-nights">${n}ν</span>${b.amount?`<span class="bk-amt">€${b.amount}</span>`:''}${avg?`<span class="bk-avg">€${avg}/ν</span>`:''}<span class="bk-src ${srcCls}">${b.source}</span><button class="del-btn" onclick="del(${b.id})">✕</button></div>`;}).join('');});document.getElementById('st-total').textContent=total;document.getElementById('st-active').textContent=active;document.getElementById('st-upcoming').textContent=upcoming;document.getElementById('st-month').textContent='€'+monthRev;document.getElementById('st-avg').textContent=totalNights?'€'+Math.round(totalAmt/totalNights)+'/ν':'—';}
+function renderCalendar(){const today=todayStr();const container=document.getElementById('cal-container');container.innerHTML='';MONTHS.forEach(({year,month,label,days})=>{const block=document.createElement('div');block.className='cal-block';let html=`<div class="cal-mhdr"><div class="cal-mlbl">${label}</div><div class="cal-dhdr">`;for(let d=1;d<=days;d++){const ds=dateStr(year,month,d);const dow=new Date(year,month,d).getDay();const wk=isWknd(year,month,d);const isT=ds===today;html+=`<div class="cal-dlbl${wk?' wknd':''}${isT?' todlbl':''}">${d}<br><span>${DAY_NAMES[dow]}</span></div>`;}html+='</div></div>';block.innerHTML=html;ROOMS.forEach(room=>{const row=document.createElement('div');row.className='cal-row';row.innerHTML=`<div class="cal-rlbl">${room.label}<span>${room.sub}</span></div><div class="cal-cells" id="cc-${year}-${month}-${room.id}"></div>`;block.appendChild(row);});container.appendChild(block);ROOMS.forEach(room=>{const cellsEl=document.getElementById(`cc-${year}-${month}-${room.id}`);for(let d=1;d<=days;d++){const ds=dateStr(year,month,d);const bk=bkForCell(room.id,ds);const wk=isWknd(year,month,d);const isT=ds===today;const cell=document.createElement('div');cell.className='cal-cell'+(bk?' bkd':'')+(wk?' wkend':'')+(isT?' tod':'');if(bk){const n=nights(bk.checkin,bk.checkout);const avg=bk.amount&&n?` · €${Math.round(bk.amount/n)}/ν`:'';cell.setAttribute('data-tip',`${bk.guest} ${fmt(bk.checkin)}→${fmt(bk.checkout)} (${n}ν${avg})`);}cellsEl.appendChild(cell);}});})}
+function renderGaps(){const container=document.getElementById('gaps-container');const gaps=[];ROOMS.forEach(room=>{const rBks=bookings.filter(b=>b.room===room.id&&b.checkout>SEASON_START&&b.checkin<SEASON_END).sort((a,b)=>a.checkin.localeCompare(b.checkin));let cursor=SEASON_START;rBks.forEach(bk=>{const s=cursor>SEASON_START?cursor:SEASON_START;const e=bk.checkin<SEASON_END?bk.checkin:SEASON_END;if(s<e)gaps.push({room:room.label,sub:room.sub,start:s,end:e,n:nights(s,e)});if(bk.checkout>cursor)cursor=bk.checkout;});if(cursor<SEASON_END)gaps.push({room:room.label,sub:room.sub,start:cursor,end:SEASON_END,n:nights(cursor,SEASON_END)});});if(!gaps.length){container.innerHTML='<span class="no-gaps">Δεν υπάρχουν κενά — τέλεια πληρότητα! 🎉</span>';return;}gaps.sort((a,b)=>a.start.localeCompare(b.start));container.innerHTML=gaps.map(g=>`<div class="gap-card${g.n>=7?' long':''}"><div class="gr">${g.room} · ${g.sub}</div><div class="gd">${fmt(g.start)} — ${fmt(g.end)}</div><div class="gn">${g.n} κενές νύχτες${g.n>=7?' ⚠️':''}</div></div>`).join('');}
+function renderCalStats(){const total=62*4;let booked=0,rev=0,n=0,amt=0;bookings.forEach(b=>{const s=b.checkin<SEASON_START?SEASON_START:b.checkin;const e=b.checkout>SEASON_END?SEASON_END:b.checkout;if(s<e){const nn=nights(s,e);booked+=nn;}if(b.checkin>=SEASON_START&&b.checkout<=SEASON_END){rev+=Number(b.amount||0);const nn=nights(b.checkin,b.checkout);n+=nn;amt+=Number(b.amount||0);}});document.getElementById('cs-booked').textContent=booked;document.getElementById('cs-free').textContent=total-booked;document.getElementById('cs-pct').textContent=Math.round(booked/total*100)+'%';document.getElementById('cs-rev').textContent='€'+rev.toLocaleString('el-GR');document.getElementById('cs-avg').textContent=n?'€'+Math.round(amt/n)+'/ν':'—';}
+function openModal(){document.getElementById('modal').classList.add('open');document.getElementById('f-in').value=todayStr();document.getElementById('f-out').value=addDays(todayStr(),5);document.getElementById('avg-preview').textContent='';}
+function closeModal(){document.getElementById('modal').classList.remove('open');}
+document.getElementById('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal();});
+function calcAvg(){const amt=Number(document.getElementById('f-amt').value||0);const ci=document.getElementById('f-in').value;const co=document.getElementById('f-out').value;if(amt&&ci&&co&&ci<co){const n=nights(ci,co);document.getElementById('avg-preview').textContent=`→ €${Math.round(amt/n)} / νύχτα (${n} νύχτες)`;}else{document.getElementById('avg-preview').textContent='';}}
+document.getElementById('f-in').addEventListener('change',calcAvg);
+document.getElementById('f-out').addEventListener('change',calcAvg);
+function saveBooking(){const guest=document.getElementById('f-guest').value.trim();const checkin=document.getElementById('f-in').value;const checkout=document.getElementById('f-out').value;if(!guest||!checkin||!checkout){alert('Συμπλήρωσε όλα τα υποχρεωτικά πεδία!');return;}if(checkin>=checkout){alert('Το checkout πρέπει να είναι μετά το check-in!');return;}bookings.push({id:Date.now(),room:document.getElementById('f-room').value,guest,checkin,checkout,amount:Number(document.getElementById('f-amt').value||0),source:document.getElementById('f-src').value,notes:document.getElementById('f-note').value});['f-guest','f-amt','f-note'].forEach(id=>document.getElementById(id).value='');closeModal();persist();}
+function del(id){if(!confirm('Διαγραφή κράτησης;'))return;bookings=bookings.filter(b=>b.id!==id);persist();}
+function persist(){localStorage.setItem('samothraki_v2',JSON.stringify(bookings));renderDashboard();renderCalendar();renderGaps();renderCalStats();}
+renderDashboard();renderCalendar();renderGaps();renderCalStats();
+</script>
+</body>
+</html>
+
