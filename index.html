@@ -6,11 +6,7 @@
 <title>Κρατήσεις Σαμοθράκη 2025</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Karla:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg:#0e1117;--surface:#161b24;--surface2:#1e2533;--border:#2a3142;
-  --text:#e8eaf0;--muted:#7880a0;--accent:#e8c97a;--blue:#5b8dee;
-  --green:#3ec97a;--red:#e8564a;--orange:#e8a03a;--booked:#e8564a;
-}
+:root{--bg:#0e1117;--surface:#161b24;--surface2:#1e2533;--border:#2a3142;--text:#e8eaf0;--muted:#7880a0;--accent:#e8c97a;--blue:#5b8dee;--green:#3ec97a;--red:#e8564a;--orange:#e8a03a;--booked:#e8564a}
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--text);font-family:'Karla',sans-serif;font-size:14px;min-height:100vh}
 .topbar{background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:stretch;justify-content:space-between;flex-wrap:wrap;position:sticky;top:0;z-index:50}
@@ -27,10 +23,8 @@ body{background:var(--bg);color:var(--text);font-family:'Karla',sans-serif;font-
 .tc-items{margin-top:4px;display:flex;flex-direction:column;gap:2px}
 .tc-item{font-size:12px;font-weight:600}
 .tc-empty{font-size:11px;color:var(--muted);font-style:italic}
-.checkin-item{color:var(--green)}
-.checkout-item{color:var(--orange)}
-.page{display:none;padding:18px}
-.page.active{display:block}
+.checkin-item{color:var(--green)}.checkout-item{color:var(--orange)}
+.page{display:none;padding:18px}.page.active{display:block}
 .stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-bottom:16px}
 .stat-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:11px 13px}
 .stat-box .sl{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px}
@@ -60,17 +54,14 @@ body{background:var(--bg);color:var(--text);font-family:'Karla',sans-serif;font-
 .bk-empty{color:var(--muted);font-size:11px;padding:4px;font-style:italic}
 .bk-row{display:flex;flex-direction:column;gap:5px;padding:8px 10px;background:var(--surface);border:1px solid var(--border);border-radius:7px}
 .bk-row.bk-active{border-color:rgba(62,201,122,.4);background:rgba(62,201,122,.04)}
-.bk-row.bk-past{opacity:.38}
-.bk-row.bk-soon{border-color:rgba(232,160,58,.4)}
+.bk-row.bk-past{opacity:.38}.bk-row.bk-soon{border-color:rgba(232,160,58,.4)}
 .bk-top{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
 .bk-guest{font-weight:700;font-size:13px;flex:1}
 .bk-persons{font-size:10px;color:var(--muted)}
 .bk-actions{display:flex;gap:3px;margin-left:auto}
-.edit-btn,.del-btn,.pdf-btn{background:none;border:none;cursor:pointer;font-size:13px;padding:2px 4px;border-radius:4px;transition:background .15s}
-.edit-btn:hover{background:rgba(232,201,122,.15)}.del-btn:hover{background:rgba(232,86,74,.12)}.pdf-btn:hover{background:rgba(91,141,238,.12)}
+.edit-btn,.del-btn,.pdf-btn{background:none;border:none;cursor:pointer;font-size:13px;padding:2px 4px;border-radius:4px}
 .bk-mid{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .bk-phone{font-size:11px;color:var(--blue);text-decoration:none;font-weight:600}
-.bk-phone:hover{text-decoration:underline}
 .bk-email{font-size:10px;color:var(--muted)}
 .bk-bot{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
 .bk-dates{color:var(--muted);font-size:11px}
@@ -92,8 +83,79 @@ body{background:var(--bg);color:var(--text);font-family:'Karla',sans-serif;font-
 .pay-entry:last-child{border-bottom:none}
 .pay-entry .pe-amt{color:var(--green);font-weight:600}
 .pay-entry .pe-date{color:var(--muted)}
+.cal-block{background:var(--surface);border:1px solid var(--border);border-radius:11px;overflow:hidden;margin-bottom:13px}
+.cal-mhdr{display:grid;grid-template-columns:85px 1fr;background:var(--surface2);border-bottom:1px solid var(--border)}
+.cal-mlbl{padding:8px 10px;font-family:'Playfair Display',serif;font-size:13px;color:var(--accent);border-right:1px solid var(--border);display:flex;align-items:center}
+.cal-dhdr{display:flex;overflow:hidden}
+.cal-dlbl{flex:1;text-align:center;padding:5px 0;font-size:8px;font-weight:600;color:var(--muted);border-right:1px solid var(--border);min-width:0;line-height:1.3}
+.cal-dlbl.wknd{color:var(--accent)}.cal-dlbl.todlbl{color:var(--blue)}
+.cal-row{display:grid;grid-template-columns:85px 1fr;border-top:1px solid var(--border)}
+.cal-rlbl{padding:0 8px;font-size:9px;font-weight:600;color:var(--muted);border-right:1px solid var(--border);display:flex;flex-direction:column;justify-content:center;min-height:26px;background:var(--surface2)}
+.cal-rlbl span{font-size:7px;font-weight:400;color:#445;margin-top:1px}
+.cal-cells{display:flex}
+.cal-cell{flex:1;height:26px;border-right:1px solid var(--border);background:var(--bg);min-width:0;position:relative}
+.cal-cell:last-child{border-right:none}
+.cal-cell.bkd{background:var(--booked);opacity:.8}
+.cal-cell.wkend{background:#161c28}
+.cal-cell.bkd.wkend{background:var(--booked)}
+.cal-cell.tod{outline:2px solid var(--blue);outline-offset:-2px;z-index:2}
+.cal-cell.bkd:hover::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 4px);left:50%;transform:translateX(-50%);background:var(--surface2);border:1px solid var(--border);color:var(--text);font-size:10px;padding:4px 8px;border-radius:5px;white-space:nowrap;z-index:20;pointer-events:none}
+.sec-title{font-family:'Playfair Display',serif;font-size:15px;color:var(--text);margin-bottom:10px;padding-bottom:7px;border-bottom:1px solid var(--border)}
+.gaps-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:7px}
+.gap-card{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--green);border-radius:8px;padding:9px 11px}
+.gap-card.long{border-left-color:var(--orange)}
+.gap-card .gr{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px}
+.gap-card .gd{font-weight:600;font-size:12px}
+.gap-card .gn{font-size:10px;color:var(--green);margin-top:2px}
+.gap-card.long .gn{color:var(--orange)}
+.no-gaps{color:var(--muted);font-style:italic;font-size:12px}
+.legend{display:flex;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.leg{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--muted)}
+.ldot{width:9px;height:9px;border-radius:2px}
+.ldot.bkd{background:var(--booked)}.ldot.free{background:var(--bg);border:1px solid var(--border)}.ldot.tod{background:var(--blue)}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(4px);z-index:200;align-items:flex-start;justify-content:center;padding:14px;overflow-y:auto}
+.modal-overlay.open{display:flex}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px;width:100%;max-width:440px;box-shadow:0 24px 80px rgba(0,0,0,.5);animation:mup .2s ease;margin:auto}
+@keyframes mup{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.modal h3{font-family:'Playfair Display',serif;font-size:18px;color:var(--accent);margin-bottom:16px}
+.fg{margin-bottom:10px}
+.fg label{display:block;font-size:9px;color:var(--muted);margin-bottom:3px;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+.fg input,.fg select{width:100%;background:var(--bg);border:1px solid var(--border);color:var(--text);padding:8px 10px;border-radius:7px;font-family:'Karla',sans-serif;font-size:13px;transition:border-color .2s;-webkit-appearance:none}
+.fg input:focus,.fg select:focus{outline:none;border-color:var(--accent)}
+.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.preview-row{display:flex;gap:10px;margin:4px 0 8px;flex-wrap:wrap;min-height:18px}
+.prev-item{font-size:11px;font-weight:600}
+.prev-item.green{color:var(--green)}.prev-item.orange{color:var(--orange)}
+.modal-section{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin:14px 0 8px;padding-top:10px;border-top:1px solid var(--border)}
+.pay-add-row{display:grid;grid-template-columns:1fr 1fr auto;gap:7px;align-items:flex-end}
+.pay-add-row .fg{margin:0}
+.btn-pay-add{background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:7px;font-family:'Karla',sans-serif;font-size:12px;cursor:pointer;white-space:nowrap;height:38px}
+.pay-list-modal{margin-top:7px;display:flex;flex-direction:column;gap:4px}
+.pay-item-modal{display:flex;justify-content:space-between;align-items:center;padding:5px 8px;background:var(--bg);border-radius:6px;font-size:11px}
+.pay-item-modal .pim-amt{color:var(--green);font-weight:700}
+.pay-item-modal .pim-date{color:var(--muted)}
+.pay-item-modal .pim-del{background:none;border:none;color:var(--muted);cursor:pointer;font-size:11px;padding:0 3px}
+.modal-actions{display:flex;gap:8px;margin-top:16px}
+.btn-save{flex:1;background:var(--accent);color:#0e1117;border:none;padding:10px;border-radius:7px;font-family:'Karla',sans-serif;font-weight:700;font-size:13px;cursor:pointer}
+.btn-cancel{background:var(--surface2);color:var(--muted);border:1px solid var(--border);padding:10px 14px;border-radius:7px;font-family:'Karla',sans-serif;font-size:13px;cursor:pointer}
+select option{background:#1a2030}
+@media print{.topbar,.today-banner,.page,.modal-overlay{display:none!important}#print-area{display:block!important}body{background:white;color:black}}
+#print-area{display:none;padding:24px;font-family:'Karla',sans-serif}
+.conf-header{text-align:center;margin-bottom:20px;border-bottom:2px solid #222;padding-bottom:12px}
+.conf-title{font-size:22px;font-weight:700}
+.conf-sub{color:#666;font-size:13px;margin-top:4px}
+.conf-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
+.conf-field{border:1px solid #ddd;border-radius:6px;padding:10px 12px}
+.cf-lbl{font-size:10px;color:#888;text-transform:uppercase;letter-spacing:.5px}
+.cf-val{font-size:15px;font-weight:700;margin-top:3px;color:#111}
+.conf-note{padding:10px 12px;border:1px solid #ddd;border-radius:6px;margin-bottom:14px;font-size:13px}
+.conf-payments{margin-bottom:14px}
+.conf-payments h4{font-size:12px;color:#666;margin-bottom:6px;text-transform:uppercase}
+.cp-row{display:flex;justify-content:space-between;font-size:13px;padding:4px 0;border-bottom:1px solid #eee}
+.conf-footer{text-align:center;font-size:11px;color:#999;border-top:1px solid #ddd;padding-top:10px;margin-top:10px}
 </style>
-</head><body>
+</head>
+<body>
 <div class="topbar">
   <div class="topbar-left"><h1>🌊 Σαμοθράκη 2025</h1></div>
   <div class="tabs">
@@ -187,7 +249,9 @@ body{background:var(--bg);color:var(--text);font-family:'Karla',sans-serif;font-
       <button class="btn-cancel" onclick="closeModal()">Ακύρωση</button>
       <button class="btn-save" onclick="saveBooking()">Αποθήκευση</button>
     </div>
-  </<<script>
+  </div>
+</div>
+<script>
 const ROOMS=[{id:'A1',label:'Δωμάτιο Α1',sub:'Κτ. Α · Χώρα'},{id:'A2',label:'Δωμάτιο Α2',sub:'Κτ. Α · Χώρα'},{id:'B1',label:'Δωμάτιο Β1',sub:'Κτ. Β · Αλώνια'},{id:'B2',label:'Δωμάτιο Β2',sub:'Κτ. Β · Αλώνια'}];
 const MONTHS=[{year:2025,month:3,label:'Απρίλιος 2025',days:30},{year:2025,month:4,label:'Μάιος 2025',days:31},{year:2025,month:5,label:'Ιούνιος 2025',days:30},{year:2025,month:6,label:'Ιούλιος 2025',days:31},{year:2025,month:7,label:'Αύγουστος 2025',days:31},{year:2025,month:8,label:'Σεπτέμβριος 2025',days:30}];
 const DAY_NAMES=['Κυρ','Δευ','Τρι','Τετ','Πεμ','Παρ','Σαβ'];
@@ -230,5 +294,4 @@ renderToday();renderDashboard();renderCalendar();renderGaps();renderCalStats();
 </body>
 </html>
 
-</div
 
