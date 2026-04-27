@@ -161,6 +161,7 @@ select option{background:#1a2030}
   <div class="tabs">
     <div class="tab active" onclick="switchTab('dashboard')">📋 Κρατήσεις</div>
     <div class="tab" onclick="switchTab('calendar')">📅 Σεζόν</div>
+    <div class="tab" onclick="switchTab('report')">📊 Αναφορά</div>
   </div>
   <div class="topbar-right"><button class="btn-add" onclick="openModal()">+ Κράτηση</button></div>
 </div>
@@ -215,6 +216,10 @@ select option{background:#1a2030}
   </div>
 </div>
 <div id="print-area"></div>
+  <div class="page" id="page-report">
+  <div class="sec-hdr"><h2>📊 Αναφορά Σεζόν</h2></div>
+  <div id="report-content"></div>
+</div>
 <div class="modal-overlay" id="modal">
   <div class="modal">
     <h3 id="modal-title">Νέα Κράτηση</h3>
@@ -289,7 +294,8 @@ function saveBooking(){const guest=document.getElementById('f-guest').value.trim
 function del(id){if(!confirm('Διαγραφή κράτησης;'))return;bookings=bookings.filter(b=>b.id!==id);persist();}
 function printConf(id){const b=bookings.find(b=>b.id===id);if(!b)return;const n=nights(b.checkin,b.checkout);const paid=totalPaid(b);const rem=b.amount?b.amount-paid:0;const area=document.getElementById('print-area');area.innerHTML=`<div class="conf-header"><div class="conf-title">🌊 Επιβεβαίωση Κράτησης — Σαμοθράκη</div><div class="conf-sub">Ημερομηνία έκδοσης: ${fmtFull(todayStr())}</div></div><div class="conf-grid"><div class="conf-field"><div class="cf-lbl">Πελάτης</div><div class="cf-val">${b.guest}</div></div><div class="conf-field"><div class="cf-lbl">Δωμάτιο</div><div class="cf-val">${ROOM_NAMES[b.room]}</div></div><div class="conf-field"><div class="cf-lbl">Check-in</div><div class="cf-val">${fmtFull(b.checkin)}</div></div><div class="conf-field"><div class="cf-lbl">Check-out</div><div class="cf-val">${fmtFull(b.checkout)}</div></div><div class="conf-field"><div class="cf-lbl">Νύχτες</div><div class="cf-val">${n}</div></div>${b.persons?`<div class="conf-field"><div class="cf-lbl">Άτομα</div><div class="cf-val">${b.persons}</div></div>`:''}${b.phone?`<div class="conf-field"><div class="cf-lbl">Τηλέφωνο</div><div class="cf-val">${b.phone}</div></div>`:''}${b.amount?`<div class="conf-field"><div class="cf-lbl">Σύνολο</div><div class="cf-val">€${b.amount}</div></div>`:''}${b.amount?`<div class="conf-field"><div class="cf-lbl">Κατάσταση</div><div class="cf-val">${rem<=0?'✅ Εξοφλημένο':'⚠️ Υπόλοιπο €'+rem}</div></div>`:''}<div class="conf-field"><div class="cf-lbl">Πηγή</div><div class="cf-val">${b.source}</div></div></div>${b.payments&&b.payments.length?`<div class="conf-payments"><h4>Ιστορικό Πληρωμών</h4>${b.payments.map(p=>`<div class="cp-row"><span>${fmtFull(p.date)}</span><span style="color:green;font-weight:700">+€${p.amt}</span></div>`).join('')}</div>`:''}${b.notes?`<div class="conf-note"><strong>Σημείωση:</strong> ${b.notes}</div>`:''}<div class="conf-footer">Ευχαριστούμε για την κράτησή σας · Σαμοθράκη 2025</div>`;setTimeout(()=>window.print(),100);}
 function persist(){localStorage.setItem('samothraki_v3',JSON.stringify(bookings));renderToday();renderDashboard();renderCalendar();renderGaps();renderCalStats();}
-renderToday();renderDashboard();renderCalendar();renderGaps();renderCalStats();
+renderToday();renderDashboard();renderCalendar();renderGaps();renderCalStats();renderReport();
+function renderReport(){const el=document.getElementById('report-content');if(!el)return;const today=todayStr();const curMonth=today.slice(0,7);let totalB=0,totalN=0,totalAmt=0,pendingAmt=0,activeB=0,upcomingB=0;ROOMS.forEach(room=>{bookings.filter(b=>b.room===room.id).forEach(b=>{const n=nights(b.checkin,b.checkout);const paid=totalPaid(b);const rem=b.amount?b.amount-paid:0;totalB++;totalN+=n;totalAmt+=Number(b.amount||0);if(rem>0)pendingAmt+=rem;if(b.checkin<=today&&b.checkout>today)activeB++;if(b.checkin>today)upcomingB++;});});el.innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px"><div class="stat-box"><div class="sl">Σύνολο κρατήσεων</div><div class="sv blue">${totalB}</div></div><div class="stat-box"><div class="sl">Σύνολο νυκτών</div><div class="sv blue">${totalN}</div></div><div class="stat-box"><div class="sl">Σύνολο εσόδων</div><div class="sv gold">€${totalAmt}</div></div><div class="stat-box"><div class="sl">Μ.Ο. €/νύχτα</div><div class="sv green">${totalN?'€'+Math.round(totalAmt/totalN)+'/ν':'—'}</div></div><div class="stat-box"><div class="sl">Εκκρεμή υπόλοιπα</div><div class="sv red">€${pendingAmt}</div></div><div class="stat-box"><div class="sl">Πληρότητα σεζόν</div><div class="sv orange">${Math.round(totalN/(183*4)*100)}%</div></div></div><button onclick="window.print()" style="background:var(--accent);color:#0e1117;border:none;padding:10px 20px;border-radius:7px;font-family:Karla,sans-serif;font-weight:700;font-size:13px;cursor:pointer;width:100%">🖨️ Εκτύπωση Αναφοράς</button>`;}
 </script>
 </body>
 </html>
